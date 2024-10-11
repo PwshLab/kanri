@@ -155,45 +155,45 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. -->
               </button>
             </template>
 
-                        <template #content>
-                            <div class="flex flex-col">
-                                <DropdownMenuItem
-                                    class="bg-elevation-2-hover w-full cursor-pointer rounded-md px-4 py-1.5 pr-6 text-left"
-                                    @click="renameBoardModal(getBoardIndex())"
-                                >
-                                    Rename Board
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                    class="bg-elevation-2-hover w-full cursor-pointer rounded-md px-4 py-1.5 pr-6 text-left"
-                                    @click="duplicateBoard"
-                                >
-                                    Duplicate Board
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                    class="bg-elevation-2-hover w-full cursor-pointer rounded-md px-4 py-1.5 pr-6 text-left"
-                                    @click="exportBoardToJson"
-                                >
-                                    Export Board
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                    class="bg-elevation-2-hover w-full cursor-pointer rounded-md px-4 py-1.5 pr-6 text-left"
-                                    @click="toggleBoardPin"
-                                >
-                                    <span v-if="!isPinned">Pin Board</span>
-                                    <span v-else>Unpin Board</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                    class="bg-elevation-2-hover w-full cursor-pointer rounded-md px-4 py-1.5 pr-6 text-left"
-                                    @click="deleteBoardModal(getBoardIndex())"
-                                >
-                                    Delete Board
-                                </DropdownMenuItem>
-                            </div>
-                        </template>
-                    </Dropdown>
-                </div>
-            </div>
+            <template #content>
+              <div class="flex flex-col">
+                <DropdownMenuItem
+                  class="bg-elevation-2-hover w-full cursor-pointer rounded-md px-4 py-1.5 pr-6 text-left"
+                  @click="renameBoardModal(getBoardIndex())"
+                >
+                  Rename Board
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  class="bg-elevation-2-hover w-full cursor-pointer rounded-md px-4 py-1.5 pr-6 text-left"
+                  @click="duplicateBoard"
+                >
+                  Duplicate Board
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  class="bg-elevation-2-hover w-full cursor-pointer rounded-md px-4 py-1.5 pr-6 text-left"
+                  @click="exportBoardToJson"
+                >
+                  Export Board
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  class="bg-elevation-2-hover w-full cursor-pointer rounded-md px-4 py-1.5 pr-6 text-left"
+                  @click="toggleBoardPin"
+                >
+                  <span v-if="!isPinned">Pin Board</span>
+                  <span v-else>Unpin Board</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  class="bg-elevation-2-hover w-full cursor-pointer rounded-md px-4 py-1.5 pr-6 text-left"
+                  @click="deleteBoardModal(getBoardIndex())"
+                >
+                  Delete Board
+                </DropdownMenuItem>
+              </div>
+            </template>
+          </Dropdown>
         </div>
+      </div>
+    </div>
 
     <div
       id="kanban-cols-container"
@@ -359,11 +359,13 @@ onMounted(async () => {
     columnZoomLevel.value = columnZoom;
   }
 
-    columnAddToTopButtonEnabled.value = await store.get("addToTopOfColumnButtonEnabled") || false;
-    columnCardCountEnabled.value = await store.get("displayColumnCardCountEnabled") || false;
+  columnAddToTopButtonEnabled.value =
+    (await store.get("addToTopOfColumnButtonEnabled")) || false;
+  columnCardCountEnabled.value =
+    (await store.get("displayColumnCardCountEnabled")) || false;
 
-    const pinned = (await store.get("pins")) as Board[] || [];
-    isPinned.value = findObjectById(pinned, board.value.id) ? true : false;
+  const pinned = ((await store.get("pins")) as Board[]) || [];
+  isPinned.value = findObjectById(pinned, board.value.id) ? true : false;
 
   document.addEventListener("keydown", keyDownListener);
 
@@ -902,13 +904,13 @@ const enableBoardTitleEditing = () => {
 };
 
 const getBoardIndex = () => {
-    return boards.value.indexOf(board.value);
-}
+  return boards.value.indexOf(board.value);
+};
 
 const toggleBoardPin = () => {
-    emitter.emit("toggleBoardPin", board.value);
-    isPinned.value = !isPinned.value;
-}
+  emitter.emit("toggleBoardPin", board.value);
+  isPinned.value = !isPinned.value;
+};
 
 /**
  * Board background utilities

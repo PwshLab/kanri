@@ -47,9 +47,9 @@ type Events = {
   openChangelogModal: void;
   openKanbanPage: void;
   openModalWithCustomDescription: { description: string };
-    boardDeletion: Board;
+  boardDeletion: Board;
 
-    toggleBoardPin: Board;
+  toggleBoardPin: Board;
 
   resetColumnInputs: void;
 

@@ -42,28 +42,28 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. -->
         />
       </div>
 
-            <Tooltip>
-                <template #trigger>
-                    <button
-                        class="bg-elevation-2-hover transition-button rounded-md p-2"
-                        @click="$router.push('/')"
-                    >
-                        <PhHouse class="size-7" />
-                    </button>
-                </template>
+      <Tooltip>
+        <template #trigger>
+          <button
+            class="bg-elevation-2-hover transition-button rounded-md p-2"
+            @click="$router.push('/')"
+          >
+            <PhHouse class="size-7" />
+          </button>
+        </template>
 
         <template #content> Home </template>
       </Tooltip>
 
-            <Tooltip v-if="!showAddButton">
-                <template #trigger>
-                    <button
-                        class="bg-elevation-2-hover transition-button rounded-md p-2"
-                        @click="$router.go(-1)"
-                    >
-                        <PhArrowBendUpLeft class="size-7" />
-                    </button>
-                </template>
+      <Tooltip v-if="!showAddButton">
+        <template #trigger>
+          <button
+            class="bg-elevation-2-hover transition-button rounded-md p-2"
+            @click="$router.go(-1)"
+          >
+            <PhArrowBendUpLeft class="size-7" />
+          </button>
+        </template>
 
         <template #content> Back </template>
       </Tooltip>
@@ -78,13 +78,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. -->
           </button>
         </template>
 
-                <template #content>
-                    Create a new board
-                </template>
-            </Tooltip>
-        </section>
+        <template #content> Create a new board </template>
+      </Tooltip>
+    </section>
 
-        <PinnedBar/>
+    <PinnedBar />
 
     <section id="icons-bottom" class="flex flex-col items-center gap-4">
       <Tooltip>
@@ -193,14 +191,11 @@ const keyDownListener = (e: KeyboardEvent) => {
 };
 
 const updateAddButton = () => {
-    const currentPath = router.currentRoute.value.path;
+  const currentPath = router.currentRoute.value.path;
 
-    if (currentPath.endsWith("/"))
-        showAddButton.value = true;
-    else
-        showAddButton.value = false;
-}
-
+  if (currentPath.endsWith("/")) showAddButton.value = true;
+  else showAddButton.value = false;
+};
 </script>
 
 <style scoped>

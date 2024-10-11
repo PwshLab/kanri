@@ -412,10 +412,10 @@ const deleteBoardModal = (index: number | undefined) => {
 const deleteBoard = async (boardIndex: number | undefined) => {
   if (boardIndex === -1 || boardIndex == undefined) return;
 
-    const deletedBoard = boards.value.splice(boardIndex, 1);
-    store.set("boards", boards.value);
-    
-    deletedBoard.forEach(board => emitter.emit("boardDeletion", board));
+  const deletedBoard = boards.value.splice(boardIndex, 1);
+  store.set("boards", boards.value);
+
+  deletedBoard.forEach((board) => emitter.emit("boardDeletion", board));
 };
 
 const sortBoardsAlphabetically = () => {
