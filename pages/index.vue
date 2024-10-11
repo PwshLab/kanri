@@ -1,4 +1,4 @@
-<!-- SPDX-FileCopyrightText: Copyright (c) 2022-2024 trobonox <hello@trobo.dev> -->
+<!-- SPDX-FileCopyrightText: Copyright (c) 2022-2024 trobonox <hello@trobo.dev>, PwshLab -->
 <!-- -->
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <!--
@@ -398,8 +398,10 @@ const deleteBoardModal = (index: number | undefined) => {
 const deleteBoard = async (boardIndex: number | undefined) => {
     if (boardIndex === -1 || boardIndex == undefined) return;
 
-    boards.value.splice(boardIndex, 1);
+    const deletedBoard = boards.value.splice(boardIndex, 1);
     store.set("boards", boards.value);
+    
+    deletedBoard.forEach(board => emitter.emit("boardDeletion", board));
 };
 
 const sortBoardsAlphabetically = () => {

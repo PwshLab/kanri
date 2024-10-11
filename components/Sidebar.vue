@@ -1,4 +1,4 @@
-<!-- SPDX-FileCopyrightText: Copyright (c) 2022-2024 trobonox <hello@trobo.dev> -->
+<!-- SPDX-FileCopyrightText: Copyright (c) 2022-2024 trobonox <hello@trobo.dev>, PwshLab -->
 <!-- -->
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <!--
@@ -48,7 +48,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. -->
                 />
             </div>
 
-            <Tooltip v-if="showAddButton">
+            <Tooltip>
                 <template #trigger>
                     <button
                         class="bg-elevation-2-hover transition-button rounded-md p-2"
@@ -63,7 +63,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. -->
                 </template>
             </Tooltip>
 
-            <Tooltip v-else>
+            <Tooltip v-if="!showAddButton">
                 <template #trigger>
                     <button
                         class="bg-elevation-2-hover transition-button rounded-md p-2"
@@ -93,6 +93,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. -->
                 </template>
             </Tooltip>
         </section>
+
+        <PinnedBar/>
 
         <section
             id="icons-bottom"
@@ -154,6 +156,7 @@ import { PhArrowBendUpLeft, PhHouse , PhArrowsLeftRight, PhGearSix, PhQuestion }
 
 
 const store = useTauriStore().store;
+const router = useRouter();
 
 const helpModalVisible = ref(false);
 const newBoardModalVisible = ref(false);
@@ -181,11 +184,11 @@ onMounted(async () => {
     });
 
     emitter.on("openKanbanPage", () => {
-        showAddButton.value = false;
+        updateAddButton();
     });
 
     emitter.on("closeKanbanPage", () => {
-        showAddButton.value = true;
+        updateAddButton();
     });
 
     emitter.on("showSidebarBackArrow", () => {
@@ -215,6 +218,16 @@ const keyDownListener = (e: KeyboardEvent) => {
         return;
     }
 }
+
+const updateAddButton = () => {
+    const currentPath = router.currentRoute.value.path;
+
+    if (currentPath.endsWith("/"))
+        showAddButton.value = true;
+    else
+        showAddButton.value = false;
+}
+
 </script>
 
 <style scoped>

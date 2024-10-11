@@ -1,4 +1,4 @@
-<!-- SPDX-FileCopyrightText: Copyright (c) 2022-2024 trobonox <hello@trobo.dev> -->
+<!-- SPDX-FileCopyrightText: Copyright (c) 2022-2024 trobonox <hello@trobo.dev>, PwshLab -->
 <!-- -->
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <!--
@@ -177,6 +177,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. -->
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                     class="bg-elevation-2-hover w-full cursor-pointer rounded-md px-4 py-1.5 pr-6 text-left"
+                                    @click="toggleBoardPin"
+                                >
+                                    <span v-if="!isPinned">Pin Board</span>
+                                    <span v-else>Unpin Board</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    class="bg-elevation-2-hover w-full cursor-pointer rounded-md px-4 py-1.5 pr-6 text-left"
                                     @click="deleteBoardModal(getBoardIndex())"
                                 >
                                     Delete Board
@@ -277,6 +284,7 @@ const router = useRouter();
 const boards: Ref<Array<Board>> = ref([]);
 const board: Ref<Board> = ref({ columns: [], id: "123", title: "" });
 const draggingEnabled = ref(true);
+const isPinned = ref(false);
 
 const searchQuery = ref("");
 
@@ -346,6 +354,9 @@ onMounted(async () => {
 
     columnAddToTopButtonEnabled.value = await store.get("addToTopOfColumnButtonEnabled") || false;
     columnCardCountEnabled.value = await store.get("displayColumnCardCountEnabled") || false;
+
+    const pinned = (await store.get("pins")) as Board[] || [];
+    isPinned.value = findObjectById(pinned, board.value.id) ? true : false;
 
     document.addEventListener("keydown", keyDownListener);
 
@@ -841,6 +852,11 @@ const enableBoardTitleEditing = () => {
 
 const getBoardIndex = () => {
     return boards.value.indexOf(board.value);
+}
+
+const toggleBoardPin = () => {
+    emitter.emit("toggleBoardPin", board.value);
+    isPinned.value = !isPinned.value;
 }
 
 /**
